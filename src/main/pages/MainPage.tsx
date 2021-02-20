@@ -17,7 +17,7 @@ const MainPage = () => {
 
   return (
     <Grid direction="column" p={10}>
-      <Heading>Word Game</Heading>
+      <Heading>Wordcloud Game</Heading>
       <Text>by Maciej Marcinkowski</Text>
       {lastScore}
       <Link m={20} as={ReactLink} to="/game">
