@@ -1,38 +1,42 @@
-import * as React from "react"
+import * as React from "react";
 import {
   ChakraProvider,
   Box,
   Text,
-  Link,
   VStack,
   Code,
   Grid,
   theme,
-} from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
+} from "@chakra-ui/react";
+import { ColorModeSwitcher } from "./ColorModeSwitcher";
+import { GameContext } from "./shared/context/game-context";
+import { useState } from "react";
+import Router from "./router/Router";
 
-export const App = () => (
-  <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
-      </Grid>
-    </Box>
-  </ChakraProvider>
-)
+export const App = () => {
+
+  const [username, setUsername] = useState<string>()
+  const [score, setScore] = useState<number>()
+
+  return (
+    <ChakraProvider theme={theme}>
+      <GameContext.Provider
+        value={{
+          score,
+          username,
+          setScore,
+          setUsername,
+        }}
+      >
+        <Box textAlign="center" fontSize="xl">
+          <Grid minH="100vh" p={1}>
+            <ColorModeSwitcher justifySelf="flex-start" />
+            <VStack minH="100%" height="100%">
+              <Router />
+            </VStack>
+          </Grid>
+        </Box>
+      </GameContext.Provider>
+    </ChakraProvider>
+  );
+};
