@@ -31,7 +31,7 @@ export const App = () => {
         <Box textAlign="center" fontSize="xl">
           <Grid minH="100vh" p={1}>
             <ColorModeSwitcher justifySelf="flex-start" />
-            <VStack minH="100%" height="100%">
+            <VStack width="100%" height="100%">
               <Router />
             </VStack>
           </Grid>

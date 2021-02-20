@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link as ReactLink } from "react-router-dom";
+import { Link as ReactLink, Redirect } from "react-router-dom";
 
 import {
     Box,
   Button,
+  Flex,
   FormControl,
   FormLabel,
   Heading,
@@ -12,23 +13,27 @@ import {
 } from "@chakra-ui/react";
 
 const PreGamePage = () => {
-  const [inputValue, setInputValue] = useState<string>();
+  const [inputValue, setInputValue] = useState<string>("");
 
   const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value);
 
+  const startGameHandler = () => {
+    <Redirect to="/game/start"/>
+  }
+
   return (
-    <div>
+    <Flex direction={["column", "row"]}>
       <Heading>Please introduce yourself</Heading>
       <FormControl my={20}>
         <FormLabel>Provide your nickname</FormLabel>
         <Input value={inputValue} onChange={inputHandler} />
-        <Box mt={4} colorScheme="teal" type="submit">
-         <Link as={ReactLink} to="/game/start">
-              Start The Game        
-          </Link>
-        </Box>
+        <ReactLink to="/game/start">
+        <Button mt={4} disabled={inputValue === ""} colorScheme="teal" onClick={startGameHandler}>          
+            Start The Game        
+        </Button>
+        </ReactLink>
       </FormControl>
-    </div>
+    </Flex>
   );
 };
 
