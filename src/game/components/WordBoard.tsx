@@ -23,10 +23,12 @@ const WordBoard: FunctionComponent<WordBoardProps> = (props) => {
     const gameSet = ctx.gameSet;
 
     if (gameSet) {
-      const gameItems = gameSet.all_words.map((el, i) => {
-        const isCorrect = gameSet.good_words.includes(el);
-        return <WordGameItem key={i} word={el} correct={isCorrect} />;
-      });
+      const gameItems = gameSet.all_words
+        .map((el, i) => {
+          const isCorrect = gameSet.good_words.includes(el);
+          return <WordGameItem key={i} word={el} correct={isCorrect} />;
+        })
+        .sort(() => Math.random() - 0.5);
 
       setMappedWords(gameItems);
     }
