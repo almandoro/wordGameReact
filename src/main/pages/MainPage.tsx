@@ -7,6 +7,7 @@ import {
   Heading,
   HStack,
   Link,
+  Stack,
   Tag,
   Text,
   useColorModeValue,
@@ -42,7 +43,12 @@ const MainPage = () => {
     <Flex align="center" direction="column" mt={20} p={10}>
       <Heading>Wordcloud Game</Heading>
       <Text>by Maciej Marcinkowski</Text>
-      <HStack m={20} spacing={10} align="baseline">
+      <Stack
+        direction={["column", "row"]}
+        m={20}
+        spacing={10}
+        align={["center", "baseline"]}
+      >
         <VStack align="center">
           <Link as={ReactLink} to="/game">
             {linkText}
@@ -50,7 +56,7 @@ const MainPage = () => {
           {lastScore}
         </VStack>
         <ChangeNickRedirector />
-      </HStack>
+      </Stack>
     </Flex>
   );
 };
