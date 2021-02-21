@@ -69,15 +69,19 @@ const WordGameItem: FunctionComponent<WordGameProps> = (props) => {
       {answerTag}
       <Button
         my={2}
-        mx={8}
+        mx={[2,8]}
         h="max-content"
         bg={selected ? selectedItemBg : notSelectedItemBg}
         size="md"
         px={3}
         py={1}
-        borderRadius="3xl"
+        w="max-content"
+        _hover={{}}
+        borderRadius={["xl","3xl"]}
+        isAttached={[true,false]}
         onClick={onClickHandler}
         disabled={ctx.gameFinished}
+        fontSize={["0.8em","1.5em"]}
       >
         {props.word}
       </Button>
