@@ -1,42 +1,19 @@
-import React, { useState } from "react";
-import { Link as ReactLink, Redirect } from "react-router-dom";
+import React, { useContext } from "react";
 
-import {
-  Button,
-  Flex,
-  FormControl,
-  FormLabel,
-  Heading,
-  Input,
-} from "@chakra-ui/react";
+import { Flex, Heading } from "@chakra-ui/react";
+import UserInputForm from "../components/UserInputForm";
+import { GameContext } from "../../shared/context/game-context";
+import { Redirect } from "react-router-dom";
 
 const PreGamePage = () => {
-  const [inputValue, setInputValue] = useState<string>("");
-
-  const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setInputValue(event.target.value);
-
-  const startGameHandler = () => {
-    <Redirect to="/game/start" />;
-  };
+  const ctx = useContext(GameContext);
+  const redirect = ctx.username ? <Redirect to="/game/play" /> : null;
 
   return (
-    <Flex direction={["column", "row"]}>
+    <Flex textAlign="center" mt={20} direction="column">
+      {redirect}
       <Heading>Please introduce yourself</Heading>
-      <FormControl my={20}>
-        <FormLabel>Provide your nickname</FormLabel>
-        <Input value={inputValue} onChange={inputHandler} />
-        <ReactLink to="/game/start">
-          <Button
-            mt={4}
-            disabled={inputValue === ""}
-            colorScheme="teal"
-            onClick={startGameHandler}
-          >
-            Start The Game
-          </Button>
-        </ReactLink>
-      </FormControl>
+      <UserInputForm />
     </Flex>
   );
 };

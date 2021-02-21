@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { BrowserRouter, Redirect, Route, RouteProps, Switch } from "react-router-dom";
+import { Redirect, Route, RouteProps, Switch } from "react-router-dom";
 
 import GamePage from "../game/pages/GamePage";
 import PostGamePage from "../game/pages/PostGamePage";
@@ -14,7 +14,7 @@ const routes: RouteProps[] = [
   },
   {
     exact: true,
-    path: "/game/start",
+    path: "/game/play",
     component: GamePage,
   },
   {
@@ -29,15 +29,14 @@ const routes: RouteProps[] = [
   },
 ];
 
-
 const Router: FunctionComponent = (props) => {
   return (
-      <Switch>
-        {routes.map((route, i) => (
-          <Route key={i} {...route} />
-        ))}
+    <Switch>
+      {routes.map((route, i) => (
+        <Route key={i} {...route} />
+      ))}
       <Redirect to="/" />
-      </Switch>      
+    </Switch>
   );
 };
 

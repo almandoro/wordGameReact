@@ -1,29 +1,57 @@
 import React, { useContext } from "react";
 import { Link as ReactLink } from "react-router-dom";
 
-import { Grid, Heading, Link, Text } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Heading,
+  HStack,
+  Link,
+  Tag,
+  Text,
+  useColorModeValue,
+  VStack,
+} from "@chakra-ui/react";
 import { GameContext } from "../../shared/context/game-context";
+import ChangeNickRedirector from "../components/ChangeNickRedirector";
 
 const MainPage = () => {
   const ctx = useContext(GameContext);
+  const userColor = useColorModeValue("yellow.200", "purple.600");
 
-  const linkText = ctx.username
-    ? `Hello, ${ctx.username}. Do you wanna play again?`
-    : "Check the Game!";
+  const linkText = ctx.username ? (
+    <Button colorScheme="teal">
+      <HStack fontSize="1.5em" align="baseline">
+        <Text color={userColor}>
+          <i>{ctx.username}.</i>
+        </Text>
+        <Text> Click to play again!</Text>
+      </HStack>
+    </Button>
+  ) : (
+    "Check the Game!"
+  );
 
-  const lastScore = ctx.score ? (
-    <Text color="green.300" m={10}>Good job, your last score was {ctx.score}!</Text>
-  ) : null;
+  const lastScore = ctx.username && (
+    <Tag colorScheme="telegram" mt={10}>
+      Your last score: {ctx.score ? ctx.score + " points" : "-"}
+    </Tag>
+  );
 
   return (
-    <Grid direction="column" p={10}>
+    <Flex align="center" direction="column" mt={20} p={10}>
       <Heading>Wordcloud Game</Heading>
       <Text>by Maciej Marcinkowski</Text>
-      {lastScore}
-      <Link m={20} as={ReactLink} to="/game">
-        {linkText}
-      </Link>
-    </Grid>
+      <HStack m={20} spacing={10} align="baseline">
+        <VStack align="center">
+          <Link as={ReactLink} to="/game">
+            {linkText}
+          </Link>
+          {lastScore}
+        </VStack>
+        <ChangeNickRedirector />
+      </HStack>
+    </Flex>
   );
 };
 

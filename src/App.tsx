@@ -1,22 +1,27 @@
 import * as React from "react";
-import {
-  ChakraProvider,
-  Box,
-  Text,
-  VStack,
-  Code,
-  Grid,
-  theme,
-} from "@chakra-ui/react";
+import { ChakraProvider, theme, Flex } from "@chakra-ui/react";
 import { ColorModeSwitcher } from "./ColorModeSwitcher";
 import { GameContext } from "./shared/context/game-context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Router from "./router/Router";
+import { GameSet } from "./game/pages/GamePage";
+import Cookies from "js-cookie";
 
 export const App = () => {
+  const [username, setUsername] = useState<string>();
+  const [score, setScore] = useState<number>();
+  const [selectedWords, setSelectedWords] = useState<Set<string>>(
+    new Set<string>()
+  );
+  const [gameSet, setGameSet] = useState<GameSet>();
+  const [gameFinished, setGameFinished] = useState<boolean>(false);
 
-  const [username, setUsername] = useState<string>()
-  const [score, setScore] = useState<number>()
+  useEffect(() => {
+    const cookie = Cookies.get("username");
+    if (cookie) {
+      setUsername(cookie);
+    }
+  }, []);
 
   return (
     <ChakraProvider theme={theme}>
@@ -24,18 +29,27 @@ export const App = () => {
         value={{
           score,
           username,
+          selectedWords,
+          gameSet,
+          gameFinished,
           setScore,
           setUsername,
+          setSelectedWords,
+          setGameSet,
+          setGameFinished,
         }}
       >
-        <Box textAlign="center" fontSize="xl">
-          <Grid minH="100vh" p={1}>
-            <ColorModeSwitcher justifySelf="flex-start" />
-            <VStack width="100%" height="100%">
-              <Router />
-            </VStack>
-          </Grid>
-        </Box>
+        <Flex
+          textAlign="center"
+          fontSize="xl"
+          minH="100vh"
+          p={2}
+          m={0}
+          direction="column"
+        >
+          <ColorModeSwitcher left={0} position="fixed" />
+          <Router />
+        </Flex>
       </GameContext.Provider>
     </ChakraProvider>
   );
