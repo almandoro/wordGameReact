@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  dev-frontend:
+    image: node
+    volumes:
+      - "./:/mnt/frontend"
+    working_dir: "/mnt/frontend"
+    entrypoint: "/bin/bash -c"
+    command:
+      - |
+        CI=true yarn && yarn start 
+    ports:
+      - 3000:3000
+  production-frontend:
+    image: wordgamereact:latest
+    ports:
+      - 80:80
